@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="GraphKey – Graphical Password Authentication System. Secure login using images instead of text passwords."/>
+  <title>GraphKey – Graphical Password Authentication</title>
+  <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <a href="/" class="navbar-brand" aria-label="GraphKey Home">
+        <div class="brand-icon" aria-hidden="true">🔑</div>
+        <span class="brand-name">Graph<span>Key</span></span>
+      </a>
+      <ul class="navbar-nav" role="list">
+        <li><a href="/" class="active" aria-current="page">Home</a></li>
+        <li><a href="/register.html">Register</a></li>
+        <li><a href="/login.html">Login</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <main>
+    <section class="hero" aria-labelledby="hero-heading">
+      <div class="container">
+
+        <div class="hero-badge" aria-label="Project classification">
+          <span aria-hidden="true">🛡️</span>
+          BCA Cybersecurity Project 
+        </div>
+
+        <div class="hero-logo" role="img" aria-label="GraphKey logo">🔐</div>
+
+        <h1 class="hero-title" id="hero-heading">GraphKey</h1>
+        <p class="hero-subtitle">
+          A next-generation authentication system where your password is a picture — 
+          click four secret points on an image instead of typing a text password.
+        </p>
+
+        <div class="hero-actions">
+          <a href="/register.html" class="btn btn-primary btn-lg">
+            <span aria-hidden="true">✦</span> Create Account
+          </a>
+          <a href="/login.html" class="btn btn-outline btn-lg">
+            <span aria-hidden="true">→</span> Sign In
+          </a>
+        </div>
+
+        <!-- Quick concept visual -->
+        <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; max-width:680px; margin:0 auto;">
+          <div style="background:var(--bg-card); border:1px solid var(--border-dim); border-radius:var(--radius-md); padding:1rem 1.4rem; text-align:center; min-width:140px;">
+            <div style="font-size:1.8rem; margin-bottom:0.4rem;">🖼️</div>
+            <div style="font-size:0.78rem; font-weight:700; color:var(--cyan-light); text-transform:uppercase; letter-spacing:0.06em;">Step 1</div>
+            <div style="font-size:0.82rem; color:var(--text-muted); margin-top:0.2rem;">Choose an image</div>
+          </div>
+          <div style="align-self:center; color:var(--text-muted); font-size:1.2rem;">→</div>
+          <div style="background:var(--bg-card); border:1px solid var(--border-dim); border-radius:var(--radius-md); padding:1rem 1.4rem; text-align:center; min-width:140px;">
+            <div style="font-size:1.8rem; margin-bottom:0.4rem;">🖱️</div>
+            <div style="font-size:0.78rem; font-weight:700; color:var(--cyan-light); text-transform:uppercase; letter-spacing:0.06em;">Step 2</div>
+            <div style="font-size:0.82rem; color:var(--text-muted); margin-top:0.2rem;">Click 4 secret points</div>
+          </div>
+          <div style="align-self:center; color:var(--text-muted); font-size:1.2rem;">→</div>
+          <div style="background:var(--bg-card); border:1px solid var(--border-dim); border-radius:var(--radius-md); padding:1rem 1.4rem; text-align:center; min-width:140px;">
+            <div style="font-size:1.8rem; margin-bottom:0.4rem;">✅</div>
+            <div style="font-size:0.78rem; font-weight:700; color:var(--cyan-light); text-transform:uppercase; letter-spacing:0.06em;">Step 3</div>
+            <div style="font-size:0.82rem; color:var(--text-muted); margin-top:0.2rem;">Authenticated!</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" aria-labelledby="features-heading">
+      <div class="container">
+        <h2 class="section-title" id="features-heading">Why Graphical Passwords?</h2>
+        <p class="section-subtitle">
+          Images are easier for humans to remember — and harder for computers to brute-force.
+        </p>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon" aria-hidden="true">🔒</div>
+            <h3>PBKDF2-SHA256</h3>
+            <p>Your click sequence is never stored. It is hashed with 210,000 iterations and a unique cryptographic salt — just like top-tier text passwords.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon" aria-hidden="true">🗺️</div>
+            <h3>Order Matters</h3>
+            <p>The system remembers which points you clicked and in what order. Same spots in a different order means access denied.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon" aria-hidden="true">📐</div>
+            <h3>Screen-Size Proof</h3>
+            <p>Points are mapped to a logical 10×10 grid, so your password works regardless of screen size or browser zoom level.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon" aria-hidden="true">⏱️</div>
+            <h3>Rate Limited Login</h3>
+            <p>After too many failed attempts, the login endpoint is temporarily locked. Brute-forcing graphical passwords becomes computationally infeasible.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon" aria-hidden="true">🍪</div>
+            <h3>Secure Sessions</h3>
+            <p>Sessions use HttpOnly, SameSite:Strict cookies stored in a SQLite-backed session store — not vulnerable in-memory storage.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon" aria-hidden="true">🛡️</div>
+            <h3>Security Headers</h3>
+            <p>Helmet.js enforces Content-Security-Policy, X-Frame-Options, and other hardening headers on every response.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tech Stack Banner -->
+    <section style="padding:2.5rem 0; border-top:1px solid var(--border-dim);" aria-label="Technology stack">
+      <div class="container text-center">
+        <p style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.12em; color:var(--text-muted); margin-bottom:1.25rem;">Built With</p>
+        <div style="display:flex; gap:1.5rem; justify-content:center; flex-wrap:wrap;">
+          <span style="color:var(--text-secondary); font-size:0.85rem; font-weight:600;">Node.js</span>
+          <span style="color:var(--border-dim)">·</span>
+          <span style="color:var(--text-secondary); font-size:0.85rem; font-weight:600;">Express.js</span>
+          <span style="color:var(--border-dim)">·</span>
+          <span style="color:var(--text-secondary); font-size:0.85rem; font-weight:600;">SQLite</span>
+          <span style="color:var(--border-dim)">·</span>
+          <span style="color:var(--text-secondary); font-size:0.85rem; font-weight:600;">PBKDF2-SHA256</span>
+          <span style="color:var(--border-dim)">·</span>
+          <span style="color:var(--text-secondary); font-size:0.85rem; font-weight:600;">Vanilla JS</span>
+          <span style="color:var(--border-dim)">·</span>
+          <span style="color:var(--text-secondary); font-size:0.85rem; font-weight:600;">Helmet</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>GraphKey · BCA Cybersecurity Internship Project</p>
+      <p style="margin-top:0.25rem;">
+        <a href="/register.html">Register</a> · 
+        <a href="/login.html">Login</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // Redirect authenticated users to dashboard
+    (async () => {
+      try {
+        const res = await fetch('/api/me');
+        if (res.ok) window.location.href = '/dashboard.html';
+      } catch (_) { /* server not yet running — ignore */ }
+    })();
+  </script>
+</body>
+</html>

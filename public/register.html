@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Create your GraphKey account using a graphical password."/>
+  <title>Register – GraphKey</title>
+  <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <a href="/" class="navbar-brand" aria-label="GraphKey Home">
+        <div class="brand-icon" aria-hidden="true">🔑</div>
+        <span class="brand-name">Graph<span>Key</span></span>
+      </a>
+      <ul class="navbar-nav" role="list">
+        <li><a href="/">Home</a></li>
+        <li><a href="/register.html" class="active" aria-current="page">Register</a></li>
+        <li><a href="/login.html">Login</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="page-wrapper" role="main">
+    <div class="auth-card wide" role="region" aria-labelledby="register-heading">
+
+      <!-- Card Header -->
+      <div class="auth-card-header">
+        <div class="auth-card-icon" role="img" aria-label="Register icon">🛡️</div>
+        <h2 id="register-heading">Create Account</h2>
+        <p>Choose an image and click four secret points to set your graphical password.</p>
+      </div>
+
+      <!-- Step Indicator -->
+      <div class="steps" role="list" aria-label="Registration steps">
+        <div class="step active" id="step-indicator-1" role="listitem">
+          <div class="step-num" aria-label="Step 1">1</div>
+          <span>Username</span>
+        </div>
+        <div class="step-connector" aria-hidden="true"></div>
+        <div class="step" id="step-indicator-2" role="listitem">
+          <div class="step-num" aria-label="Step 2">2</div>
+          <span>Choose Image</span>
+        </div>
+        <div class="step-connector" aria-hidden="true"></div>
+        <div class="step" id="step-indicator-3" role="listitem">
+          <div class="step-num" aria-label="Step 3">3</div>
+          <span>Set Password</span>
+        </div>
+        <div class="step-connector" aria-hidden="true"></div>
+        <div class="step" id="step-indicator-4" role="listitem">
+          <div class="step-num" aria-label="Step 4">4</div>
+          <span>Done</span>
+        </div>
+      </div>
+
+      <!-- Alert box -->
+      <div id="alertBox" class="alert hidden" role="alert" aria-live="polite"></div>
+
+      <!-- Registration Form -->
+      <form id="registerForm" novalidate aria-label="Registration form">
+
+        <!-- Step 1: Username -->
+        <div id="stepUsername" class="form-group">
+          <label class="form-label" for="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            class="form-input"
+            placeholder="e.g. alice_2026"
+            autocomplete="username"
+            minlength="3"
+            maxlength="32"
+            pattern="[a-zA-Z0-9_]+"
+            required
+            aria-required="true"
+            aria-describedby="username-hint"
+          />
+          <div class="form-hint" id="username-hint">
+            3–32 characters. Letters, numbers, and underscores only.
+          </div>
+        </div>
+
+        <!-- Step 2: Image Selection -->
+        <div class="form-group">
+          <span class="image-selection-label" id="image-grid-label">
+            Choose Your Password Image
+          </span>
+          <div
+            class="image-grid"
+            id="imageGrid"
+            role="radiogroup"
+            aria-labelledby="image-grid-label"
+            aria-required="true"
+          >
+            <div
+              class="image-thumb"
+              data-image-id="img1"
+              tabindex="0"
+              role="radio"
+              aria-checked="false"
+              aria-label="Image 1: Cybercity"
+              title="Image 1 – Cybercity"
+            >
+              <img src="/images/img1.svg" alt="Cybercity skyline at night" loading="lazy"/>
+              <div class="thumb-label">Cybercity</div>
+            </div>
+            <div
+              class="image-thumb"
+              data-image-id="img2"
+              tabindex="0"
+              role="radio"
+              aria-checked="false"
+              aria-label="Image 2: Cosmos"
+              title="Image 2 – Cosmos"
+            >
+              <img src="/images/img2.svg" alt="Cosmic space scene with planet and satellite" loading="lazy"/>
+              <div class="thumb-label">Cosmos</div>
+            </div>
+            <div
+              class="image-thumb"
+              data-image-id="img3"
+              tabindex="0"
+              role="radio"
+              aria-checked="false"
+              aria-label="Image 3: Circuit"
+              title="Image 3 – Circuit"
+            >
+              <img src="/images/img3.svg" alt="Circuit board with electronic components" loading="lazy"/>
+              <div class="thumb-label">Circuit</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Graphical Password Canvas -->
+        <div class="canvas-section form-group" id="canvasSection" aria-label="Graphical password selection">
+          <div class="canvas-label">
+            <span>Click Four Secret Points <span id="pointCountText">(0 of 4 selected)</span></span>
+            <button
+              type="button"
+              class="btn btn-ghost btn-sm"
+              id="clearPointsBtn"
+              aria-label="Clear all selected points and start over"
+            >
+              ✕ Clear
+            </button>
+          </div>
+
+          <div
+            class="canvas-wrapper"
+            id="canvasWrapper"
+            role="application"
+            aria-label="Password image. Click to select up to four secret points."
+            aria-describedby="canvas-instructions"
+          >
+            <img
+              id="passwordImage"
+              src=""
+              alt="Selected password image"
+              draggable="false"
+            />
+            <canvas id="pointCanvas" aria-hidden="true"></canvas>
+            <div class="canvas-overlay-msg" id="canvasOverlay" aria-hidden="true">
+              ← Select an image above to begin
+            </div>
+          </div>
+
+          <p class="form-hint" id="canvas-instructions">
+            Click anywhere on the image to place a point. Points are numbered in order.
+            All four must be in <strong>different</strong> grid cells.
+          </p>
+
+          <!-- Point status indicators -->
+          <div class="point-status">
+            <div class="point-indicators" role="group" aria-label="Selected points">
+              <div class="point-dot" id="dot1" aria-label="Point 1 not selected">1</div>
+              <div class="point-dot" id="dot2" aria-label="Point 2 not selected">2</div>
+              <div class="point-dot" id="dot3" aria-label="Point 3 not selected">3</div>
+              <div class="point-dot" id="dot4" aria-label="Point 4 not selected">4</div>
+            </div>
+            <span class="point-status-text" id="pointStatusMsg">Select 4 distinct points in order.</span>
+          </div>
+
+          <!-- Tooltip about security -->
+          <div class="tooltip-text" role="note" aria-label="Security note">
+            🔒 Your selections are converted to a 10×10 grid and hashed with PBKDF2-SHA256. 
+            The actual positions are <strong>never stored</strong>.
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <button
+          type="submit"
+          class="btn btn-primary btn-full"
+          id="submitBtn"
+          disabled
+          aria-disabled="true"
+        >
+          <span class="btn-text">✦ Create Account</span>
+          <span class="btn-spinner" aria-hidden="true"><span class="spinner"></span> Creating…</span>
+        </button>
+
+        <p style="text-align:center; margin-top:1rem; font-size:0.875rem; color:var(--text-muted);">
+          Already have an account? <a href="/login.html">Sign in</a>
+        </p>
+
+      </form>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>GraphKey · BCA Cybersecurity Internship Project</p>
+    </div>
+  </footer>
+
+  <script src="/js/register.js" defer></script>
+</body>
+</html>

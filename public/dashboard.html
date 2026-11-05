@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Your GraphKey dashboard — account details and security status."/>
+  <title>Dashboard – GraphKey</title>
+  <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <a href="/" class="navbar-brand" aria-label="GraphKey Home">
+        <div class="brand-icon" aria-hidden="true">🔑</div>
+        <span class="brand-name">Graph<span>Key</span></span>
+      </a>
+      <ul class="navbar-nav" role="list">
+        <li><a href="/dashboard.html" class="active" aria-current="page">Dashboard</a></li>
+        <li>
+          <button
+            class="btn btn-danger btn-sm"
+            id="logoutBtn"
+            aria-label="Sign out of your account"
+          >
+            ⏻ Sign Out
+          </button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Loading overlay shown until auth check completes -->
+  <div id="loadingScreen" aria-live="polite" aria-label="Loading dashboard" style="
+    position:fixed; inset:0; background:var(--bg-primary);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    z-index:999;
+  ">
+    <div class="spinner" style="width:32px;height:32px;border-width:3px;" aria-hidden="true"></div>
+    <p style="margin-top:1rem; color:var(--text-muted); font-size:0.875rem;">Verifying session…</p>
+  </div>
+
+  <main class="dashboard-wrapper hidden" id="dashboardMain" role="main" aria-label="Dashboard">
+    <div class="container">
+
+      <!-- Dashboard Header -->
+      <div class="dashboard-header">
+        <div>
+          <p class="dashboard-greeting">Welcome back</p>
+          <h1 id="welcomeName" style="font-size:1.8rem;">Loading…</h1>
+          <p style="color:var(--text-muted); font-size:0.875rem; margin-top:0.25rem;">
+            <span aria-hidden="true">🟢</span>
+            Session active · <span id="sessionTime">—</span>
+          </p>
+        </div>
+        <button
+          class="btn btn-danger"
+          id="logoutBtnHeader"
+          aria-label="Sign out of your account"
+        >
+          ⏻ Sign Out
+        </button>
+      </div>
+
+      <!-- Success alert -->
+      <div class="alert alert-success" id="loginSuccessAlert" role="status" aria-live="polite" style="margin-bottom:1.5rem;">
+        <span aria-hidden="true">✓</span>
+        Authentication successful. Your graphical password was verified.
+      </div>
+
+      <!-- Dashboard Grid -->
+      <div class="dashboard-grid" role="grid">
+
+        <!-- Account Info Card -->
+        <div class="dash-card" role="gridcell" aria-label="Account information">
+          <div class="dash-card-header">
+            <div class="dash-card-icon" aria-hidden="true">👤</div>
+            <h3>Account Information</h3>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Username</span>
+            <span class="info-value" id="infoUsername">—</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">User ID</span>
+            <span class="info-value" id="infoUserId">—</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Account Created</span>
+            <span class="info-value" id="infoCreatedAt">—</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Password Type</span>
+            <span class="info-value">
+              <span class="badge badge-info">Graphical</span>
+            </span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Status</span>
+            <span class="info-value">
+              <span class="badge badge-success">
+                <span aria-hidden="true">●</span> Active
+              </span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Password Details Card -->
+        <div class="dash-card" role="gridcell" aria-label="Password security details">
+          <div class="dash-card-header">
+            <div class="dash-card-icon" aria-hidden="true">🔐</div>
+            <h3>Password Security</h3>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Algorithm</span>
+            <span class="info-value">PBKDF2-SHA256</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Iterations</span>
+            <span class="info-value" id="infoIterations">—</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Salt</span>
+            <span class="info-value">
+              <span class="badge badge-success">Unique · 32 bytes</span>
+            </span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Selected Image</span>
+            <span class="info-value" id="infoImage">—</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Grid Precision</span>
+            <span class="info-value">10 × 10 logical cells</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Raw Points Stored</span>
+            <span class="info-value">
+              <span class="badge badge-success">Never</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Security Features Card (full width) -->
+        <div class="dash-card full-width" role="gridcell" aria-label="Active security features">
+          <div class="dash-card-header">
+            <div class="dash-card-icon" aria-hidden="true">🛡️</div>
+            <h3>Active Security Features</h3>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0 2rem;">
+            <ul class="security-list" aria-label="Security features list">
+              <li>PBKDF2-SHA256 key derivation with high iteration count</li>
+              <li>Unique cryptographic salt per user</li>
+              <li>Timing-safe verifier comparison (crypto.timingSafeEqual)</li>
+              <li>Session stored in SQLite (persistent, not in-memory)</li>
+              <li>HttpOnly, SameSite:Strict session cookie</li>
+              <li>CSRF token protection on all state-changing endpoints</li>
+            </ul>
+            <ul class="security-list" aria-label="More security features">
+              <li>Helmet.js security headers (CSP, X-Frame-Options…)</li>
+              <li>Login rate limiting (express-rate-limit)</li>
+              <li>Server-side input validation and sanitisation</li>
+              <li>Parameterized SQLite queries (no SQL injection)</li>
+              <li>Secrets stored in .env (never hard-coded)</li>
+              <li>Audit log for all login and registration events</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Known Limitations Card -->
+        <div class="dash-card full-width" role="gridcell" aria-label="Known limitations of graphical passwords">
+          <div class="dash-card-header">
+            <div class="dash-card-icon" aria-hidden="true">⚠️</div>
+            <h3>Known Limitations of Graphical Passwords</h3>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+            <div>
+              <h4 style="font-size:0.9rem; color:var(--warning); margin-bottom:0.5rem;">
+                Shoulder Surfing
+              </h4>
+              <p style="font-size:0.82rem; color:var(--text-muted);">
+                An observer watching your screen can see which points you click, 
+                making the password easier to steal than a typed password hidden behind dots.
+              </p>
+            </div>
+            <div>
+              <h4 style="font-size:0.9rem; color:var(--warning); margin-bottom:0.5rem;">
+                Hotspot Guessing
+              </h4>
+              <p style="font-size:0.82rem; color:var(--text-muted);">
+                Users tend to click on visually salient objects (faces, bright lights).
+                Attackers can exploit this predictability by testing popular regions first.
+              </p>
+            </div>
+            <div>
+              <h4 style="font-size:0.9rem; color:var(--warning); margin-bottom:0.5rem;">
+                Grid Tolerance
+              </h4>
+              <p style="font-size:0.82rem; color:var(--text-muted);">
+                A coarse grid (10×10 = 100 cells) balances usability with security.
+                A very fine grid causes login failures from slight mouse drift.
+              </p>
+            </div>
+            <div>
+              <h4 style="font-size:0.9rem; color:var(--warning); margin-bottom:0.5rem;">
+                No Multi-Factor
+              </h4>
+              <p style="font-size:0.82rem; color:var(--text-muted);">
+                This system uses graphical password alone. In production, combining it 
+                with a second factor (OTP, hardware key) would significantly raise security.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="dash-card full-width" role="gridcell" aria-label="Quick actions">
+          <div class="dash-card-header">
+            <div class="dash-card-icon" aria-hidden="true">⚡</div>
+            <h3>Quick Actions</h3>
+          </div>
+          <div style="display:flex; gap:0.75rem; flex-wrap:wrap;">
+            <button
+              class="btn btn-danger"
+              id="logoutBtnBottom"
+              aria-label="Sign out of your account"
+            >
+              ⏻ Sign Out
+            </button>
+            <button
+              type="button"
+              class="btn btn-ghost"
+              id="healthCheckBtn"
+              aria-label="View server health check"
+            >
+              ❤️ Health Check
+            </button>
+            <button
+              type="button"
+              class="btn btn-ghost"
+              id="myProfileBtn"
+              aria-label="View user profile data"
+            >
+              👤 My Profile (JSON)
+            </button>
+          </div>
+        </div>
+
+      </div><!-- /dashboard-grid -->
+    </div><!-- /container -->
+  </main>
+
+  <!-- Modal for Quick Actions (Health Check & My Profile) -->
+  <div id="actionModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="modalTitle" class="modal-title">System Status</h3>
+        <button type="button" class="modal-close-btn" id="modalCloseBtn" aria-label="Close dialog">&times;</button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- Injected via JavaScript -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-ghost" id="modalCopyBtn">📋 Copy JSON</button>
+        <button type="button" class="btn btn-outline" id="modalCloseActionBtn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>GraphKey · BCA Cybersecurity Internship Project</p>
+    </div>
+  </footer>
+
+  <script src="/js/dashboard.js" defer></script>
+</body>
+</html>

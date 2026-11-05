@@ -1,0 +1,261 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="800" height="480">
+  <defs>
+    <radialGradient id="pcb-bg" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#051a10"/>
+      <stop offset="100%" stop-color="#020d08"/>
+    </radialGradient>
+    <filter id="trace-glow">
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="chip-glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="led-glow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- PCB background -->
+  <rect width="800" height="480" fill="url(#pcb-bg)"/>
+
+  <!-- PCB grid dots -->
+  <g fill="#0a3020" opacity="0.6">
+    <pattern id="grid-dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="10" cy="10" r="0.8" fill="#0a3020"/>
+    </pattern>
+    <rect width="800" height="480" fill="url(#grid-dots)"/>
+  </g>
+
+  <!-- Horizontal trace lines -->
+  <g stroke="#0d4025" stroke-width="1.5" opacity="0.5">
+    <line x1="0" y1="60"  x2="800" y2="60"/>
+    <line x1="0" y1="120" x2="800" y2="120"/>
+    <line x1="0" y1="180" x2="800" y2="180"/>
+    <line x1="0" y1="240" x2="800" y2="240"/>
+    <line x1="0" y1="300" x2="800" y2="300"/>
+    <line x1="0" y1="360" x2="800" y2="360"/>
+    <line x1="0" y1="420" x2="800" y2="420"/>
+  </g>
+  <!-- Vertical trace lines -->
+  <g stroke="#0d4025" stroke-width="1.5" opacity="0.5">
+    <line x1="60"  y1="0" x2="60"  y2="480"/>
+    <line x1="140" y1="0" x2="140" y2="480"/>
+    <line x1="220" y1="0" x2="220" y2="480"/>
+    <line x1="300" y1="0" x2="300" y2="480"/>
+    <line x1="380" y1="0" x2="380" y2="480"/>
+    <line x1="460" y1="0" x2="460" y2="480"/>
+    <line x1="540" y1="0" x2="540" y2="480"/>
+    <line x1="620" y1="0" x2="620" y2="480"/>
+    <line x1="700" y1="0" x2="700" y2="480"/>
+    <line x1="760" y1="0" x2="760" y2="480"/>
+  </g>
+
+  <!-- Active circuit traces (bright green) -->
+  <g stroke="#00ff88" stroke-width="2" fill="none" filter="url(#trace-glow)" opacity="0.7">
+    <!-- Top-left cluster traces -->
+    <polyline points="60,60 140,60 140,120 220,120"/>
+    <polyline points="140,60 140,0"/>
+    <polyline points="220,120 220,60 300,60"/>
+    <polyline points="220,60 220,0"/>
+
+    <!-- Central CPU traces -->
+    <polyline points="300,180 380,180 380,240 460,240"/>
+    <polyline points="380,180 380,120 460,120"/>
+    <polyline points="460,120 460,60 540,60"/>
+    <polyline points="460,240 460,300 380,300"/>
+    <polyline points="380,300 380,360 300,360"/>
+
+    <!-- Right-side traces -->
+    <polyline points="540,180 620,180 620,240 700,240"/>
+    <polyline points="620,180 620,120 700,120"/>
+    <polyline points="700,240 700,300 760,300"/>
+    <polyline points="700,120 700,60 760,60"/>
+
+    <!-- Bottom traces -->
+    <polyline points="60,360 140,360 140,420"/>
+    <polyline points="140,420 220,420 220,360"/>
+    <polyline points="220,420 300,420 300,360"/>
+    <polyline points="540,360 540,420 620,420 620,360"/>
+    <polyline points="620,420 700,420 700,360"/>
+  </g>
+
+  <!-- Secondary traces (dimmer) -->
+  <g stroke="#00aa55" stroke-width="1.2" fill="none" opacity="0.4">
+    <polyline points="60,180 140,180 140,240"/>
+    <polyline points="140,240 140,300 220,300"/>
+    <polyline points="220,300 220,360"/>
+    <polyline points="460,300 540,300 540,240 620,240"/>
+    <polyline points="60,420 60,300 140,300"/>
+  </g>
+
+  <!-- MAIN CPU CHIP (center) -->
+  <g transform="translate(310,170)">
+    <rect x="0" y="0" width="120" height="100" rx="4" fill="#1a2810" stroke="#2a5020" stroke-width="2"/>
+    <rect x="4" y="4" width="112" height="92" rx="3" fill="#0f1f0a"/>
+    <!-- Chip label -->
+    <text x="60" y="40" font-family="monospace" font-size="10" fill="#00ff88" text-anchor="middle" opacity="0.9">GRAPHKEY</text>
+    <text x="60" y="56" font-family="monospace" font-size="8"  fill="#00aa55" text-anchor="middle" opacity="0.8">AUTH-v1.0</text>
+    <text x="60" y="72" font-family="monospace" font-size="7"  fill="#006633" text-anchor="middle" opacity="0.7">SHA-256 · PBKDF2</text>
+    <!-- Pin marks top -->
+    <g fill="#00ff88" opacity="0.8">
+      <rect x="18"  y="-4" width="6" height="8" rx="1"/>
+      <rect x="34"  y="-4" width="6" height="8" rx="1"/>
+      <rect x="50"  y="-4" width="6" height="8" rx="1"/>
+      <rect x="66"  y="-4" width="6" height="8" rx="1"/>
+      <rect x="82"  y="-4" width="6" height="8" rx="1"/>
+      <rect x="98"  y="-4" width="6" height="8" rx="1"/>
+    </g>
+    <!-- Pin marks bottom -->
+    <g fill="#00ff88" opacity="0.8">
+      <rect x="18"  y="96" width="6" height="8" rx="1"/>
+      <rect x="34"  y="96" width="6" height="8" rx="1"/>
+      <rect x="50"  y="96" width="6" height="8" rx="1"/>
+      <rect x="66"  y="96" width="6" height="8" rx="1"/>
+      <rect x="82"  y="96" width="6" height="8" rx="1"/>
+      <rect x="98"  y="96" width="6" height="8" rx="1"/>
+    </g>
+    <!-- Pin marks left -->
+    <g fill="#00ff88" opacity="0.8">
+      <rect x="-8" y="14"  width="8" height="5" rx="1"/>
+      <rect x="-8" y="30"  width="8" height="5" rx="1"/>
+      <rect x="-8" y="46"  width="8" height="5" rx="1"/>
+      <rect x="-8" y="62"  width="8" height="5" rx="1"/>
+      <rect x="-8" y="78"  width="8" height="5" rx="1"/>
+    </g>
+    <!-- Pin marks right -->
+    <g fill="#00ff88" opacity="0.8">
+      <rect x="120" y="14"  width="8" height="5" rx="1"/>
+      <rect x="120" y="30"  width="8" height="5" rx="1"/>
+      <rect x="120" y="46"  width="8" height="5" rx="1"/>
+      <rect x="120" y="62"  width="8" height="5" rx="1"/>
+      <rect x="120" y="78"  width="8" height="5" rx="1"/>
+    </g>
+    <!-- Glow -->
+    <rect x="0" y="0" width="120" height="100" rx="4" fill="none" stroke="#00ff88" stroke-width="1" opacity="0.3" filter="url(#chip-glow)"/>
+  </g>
+
+  <!-- Memory chip (top-left) -->
+  <g transform="translate(90,40)">
+    <rect x="0" y="0" width="80" height="50" rx="3" fill="#12200a" stroke="#1e3a10" stroke-width="1.5"/>
+    <text x="40" y="22" font-family="monospace" font-size="8" fill="#00cc66" text-anchor="middle" opacity="0.9">MEM-4GB</text>
+    <text x="40" y="36" font-family="monospace" font-size="7" fill="#007733" text-anchor="middle" opacity="0.7">DDR5</text>
+    <g fill="#00cc66" opacity="0.7">
+      <rect x="8"  y="-4" width="5" height="7" rx="1"/>
+      <rect x="20" y="-4" width="5" height="7" rx="1"/>
+      <rect x="32" y="-4" width="5" height="7" rx="1"/>
+      <rect x="44" y="-4" width="5" height="7" rx="1"/>
+      <rect x="56" y="-4" width="5" height="7" rx="1"/>
+      <rect x="68" y="-4" width="5" height="7" rx="1"/>
+    </g>
+  </g>
+
+  <!-- Crypto module (top-right) -->
+  <g transform="translate(570,40)">
+    <rect x="0" y="0" width="90" height="55" rx="3" fill="#12200a" stroke="#1e3a10" stroke-width="1.5"/>
+    <text x="45" y="22" font-family="monospace" font-size="8" fill="#00cc66" text-anchor="middle" opacity="0.9">CRYPTO</text>
+    <text x="45" y="36" font-family="monospace" font-size="7" fill="#007733" text-anchor="middle" opacity="0.7">RNG · HMAC</text>
+    <g fill="#00cc66" opacity="0.7">
+      <rect x="8"  y="-4" width="5" height="7" rx="1"/>
+      <rect x="22" y="-4" width="5" height="7" rx="1"/>
+      <rect x="36" y="-4" width="5" height="7" rx="1"/>
+      <rect x="50" y="-4" width="5" height="7" rx="1"/>
+      <rect x="64" y="-4" width="5" height="7" rx="1"/>
+      <rect x="78" y="-4" width="5" height="7" rx="1"/>
+    </g>
+  </g>
+
+  <!-- Network chip (bottom-center) -->
+  <g transform="translate(310,360)">
+    <rect x="0" y="0" width="120" height="60" rx="3" fill="#12200a" stroke="#1e3a10" stroke-width="1.5"/>
+    <text x="60" y="26" font-family="monospace" font-size="9"  fill="#00cc66" text-anchor="middle" opacity="0.9">NETWORK</text>
+    <text x="60" y="42" font-family="monospace" font-size="7"  fill="#007733" text-anchor="middle" opacity="0.7">TLS 1.3 · HTTP/2</text>
+    <g fill="#00cc66" opacity="0.7">
+      <rect x="15" y="-4" width="5" height="7" rx="1"/>
+      <rect x="30" y="-4" width="5" height="7" rx="1"/>
+      <rect x="45" y="-4" width="5" height="7" rx="1"/>
+      <rect x="60" y="-4" width="5" height="7" rx="1"/>
+      <rect x="75" y="-4" width="5" height="7" rx="1"/>
+      <rect x="90" y="-4" width="5" height="7" rx="1"/>
+    </g>
+  </g>
+
+  <!-- Storage chip (bottom-left) -->
+  <g transform="translate(55,340)">
+    <rect x="0" y="0" width="90" height="55" rx="3" fill="#12200a" stroke="#1e3a10" stroke-width="1.5"/>
+    <text x="45" y="22" font-family="monospace" font-size="8"  fill="#00cc66" text-anchor="middle" opacity="0.9">SQLITE</text>
+    <text x="45" y="36" font-family="monospace" font-size="7"  fill="#007733" text-anchor="middle" opacity="0.7">DB · SESSION</text>
+    <g fill="#00cc66" opacity="0.7">
+      <rect x="8"  y="55" width="5" height="7" rx="1"/>
+      <rect x="22" y="55" width="5" height="7" rx="1"/>
+      <rect x="36" y="55" width="5" height="7" rx="1"/>
+      <rect x="50" y="55" width="5" height="7" rx="1"/>
+      <rect x="64" y="55" width="5" height="7" rx="1"/>
+      <rect x="78" y="55" width="5" height="7" rx="1"/>
+    </g>
+  </g>
+
+  <!-- LED indicators -->
+  <g filter="url(#led-glow)">
+    <circle cx="730" cy="380" r="6" fill="#00ff00" opacity="0.9"/>
+    <circle cx="750" cy="380" r="6" fill="#00ff00" opacity="0.7"/>
+    <circle cx="730" cy="400" r="6" fill="#00aaff" opacity="0.8"/>
+    <circle cx="750" cy="400" r="6" fill="#ff4400" opacity="0.8"/>
+    <circle cx="730" cy="420" r="6" fill="#00ff88" opacity="0.9"/>
+    <circle cx="750" cy="420" r="6" fill="#00ff00" opacity="0.6"/>
+  </g>
+
+  <!-- Capacitors / resistors -->
+  <g>
+    <!-- Capacitor 1 -->
+    <rect x="680" y="160" width="12" height="20" rx="2" fill="#2a4a1a" stroke="#3a6a2a" stroke-width="1"/>
+    <line x1="686" y1="155" x2="686" y2="160" stroke="#00aa55" stroke-width="1.5"/>
+    <line x1="686" y1="180" x2="686" y2="185" stroke="#00aa55" stroke-width="1.5"/>
+    <!-- Capacitor 2 -->
+    <rect x="710" y="160" width="12" height="20" rx="2" fill="#2a4a1a" stroke="#3a6a2a" stroke-width="1"/>
+    <line x1="716" y1="155" x2="716" y2="160" stroke="#00aa55" stroke-width="1.5"/>
+    <line x1="716" y1="180" x2="716" y2="185" stroke="#00aa55" stroke-width="1.5"/>
+    <!-- Resistor 1 -->
+    <rect x="55" y="200" width="28" height="10" rx="2" fill="#3a3a0a" stroke="#6a6a1a" stroke-width="1"/>
+    <line x1="50" y1="205" x2="55" y2="205" stroke="#aa9900" stroke-width="1.5"/>
+    <line x1="83" y1="205" x2="88" y2="205" stroke="#aa9900" stroke-width="1.5"/>
+    <!-- Resistor stripes -->
+    <line x1="62" y1="200" x2="62" y2="210" stroke="#ff6600" stroke-width="1.5" opacity="0.8"/>
+    <line x1="68" y1="200" x2="68" y2="210" stroke="#aa6600" stroke-width="1.5" opacity="0.8"/>
+    <line x1="74" y1="200" x2="74" y2="210" stroke="#ffaa00" stroke-width="1.5" opacity="0.8"/>
+  </g>
+
+  <!-- Via holes (connection dots) -->
+  <g fill="none" stroke="#00ff88" stroke-width="1.5" opacity="0.6">
+    <circle cx="140" cy="60"  r="4"/><circle cx="220" cy="60"  r="4"/>
+    <circle cx="300" cy="60"  r="4"/><circle cx="380" cy="60"  r="4"/>
+    <circle cx="460" cy="60"  r="4"/><circle cx="540" cy="60"  r="4"/>
+    <circle cx="140" cy="120" r="4"/><circle cx="220" cy="120" r="4"/>
+    <circle cx="300" cy="120" r="4"/><circle cx="380" cy="120" r="4"/>
+    <circle cx="460" cy="120" r="4"/>
+    <circle cx="380" cy="180" r="4"/><circle cx="460" cy="180" r="4"/>
+    <circle cx="540" cy="180" r="4"/><circle cx="620" cy="180" r="4"/>
+    <circle cx="380" cy="240" r="4"/><circle cx="460" cy="240" r="4"/>
+    <circle cx="540" cy="240" r="4"/><circle cx="620" cy="240" r="4"/>
+    <circle cx="700" cy="240" r="4"/>
+    <circle cx="140" cy="360" r="4"/><circle cx="220" cy="360" r="4"/>
+    <circle cx="300" cy="360" r="4"/><circle cx="540" cy="360" r="4"/>
+    <circle cx="620" cy="360" r="4"/><circle cx="700" cy="360" r="4"/>
+    <circle cx="140" cy="420" r="4"/><circle cx="220" cy="420" r="4"/>
+    <circle cx="300" cy="420" r="4"/><circle cx="540" cy="420" r="4"/>
+    <circle cx="620" cy="420" r="4"/><circle cx="700" cy="420" r="4"/>
+  </g>
+
+  <!-- Data flow animation dots -->
+  <g fill="#00ff88" filter="url(#led-glow)" opacity="0.8">
+    <circle cx="200" cy="60"  r="3"/>
+    <circle cx="420" cy="120" r="3"/>
+    <circle cx="500" cy="240" r="3"/>
+    <circle cx="660" cy="180" r="3"/>
+  </g>
+
+  <!-- Label -->
+  <text x="16" y="466" font-family="monospace" font-size="11" fill="#00aa55" opacity="0.7">GRAPHKEY :: SCENE_03 :: CIRCUIT</text>
+</svg>
